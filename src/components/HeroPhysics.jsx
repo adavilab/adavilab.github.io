@@ -49,6 +49,8 @@ const HeroPhysics = () => {
     const bodies = [];
     bodyData.current.clear();
 
+    const isMobile = width < 768;
+
     // tipo a: skills principales
     const mainSkills = [
       { key: 'react', label: 'React', color: '#8b5cf6' },
@@ -61,12 +63,12 @@ const HeroPhysics = () => {
     mainSkills.forEach(skill => {
       const x = Math.random() * (width - 200) + 100;
       const y = Math.random() * (height - 200) + 100;
-      const w = 180;
-      const h = 60;
+      const w = isMobile ? 110 : 180;
+      const h = isMobile ? 40 : 60;
       
       const body = Bodies.rectangle(x, y, w, h, {
         ...commonOptions,
-        chamfer: { radius: 30 }
+        chamfer: { radius: isMobile ? 20 : 30 }
       });
       
       Body.setVelocity(body, { 
@@ -102,12 +104,12 @@ const HeroPhysics = () => {
     tools.forEach(tool => {
       const x = Math.random() * (width - 100) + 50;
       const y = Math.random() * (height - 100) + 50;
-      const w = 120;
-      const h = 40;
+      const w = isMobile ? 80 : 120;
+      const h = isMobile ? 30 : 40;
       
       const body = Bodies.rectangle(x, y, w, h, {
         ...commonOptions,
-        chamfer: { radius: 20 }
+        chamfer: { radius: isMobile ? 15 : 20 }
       });
 
       Body.setVelocity(body, { 
@@ -300,16 +302,16 @@ const HeroPhysics = () => {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-slate-900">
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none select-none">
-        <h1 className="text-6xl md:text-9xl font-bold text-white mb-4 tracking-tighter drop-shadow-2xl">
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+        <h1 className="relative z-20 text-6xl md:text-9xl font-bold text-white mb-4 tracking-tighter drop-shadow-2xl">
           {t('hero.title')}
         </h1>
-        <p className="text-xl md:text-3xl text-slate-300 font-light tracking-wide drop-shadow-2xl">
+        <p className="relative z-0 text-xl md:text-3xl text-slate-300 font-light tracking-wide drop-shadow-2xl">
           {t('hero.subtitle')}
         </p>
       </div>
 
-      <canvas ref={sceneRef} className="absolute inset-0 z-0" />
+      <canvas ref={sceneRef} className="absolute inset-0 z-10 pointer-events-none md:pointer-events-auto" />
       
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce pointer-events-none">
         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
